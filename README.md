@@ -1,8 +1,11 @@
 # RFCs
 
-A repository for your Nim proposals. 
+A repository for your Nim proposals.
 
----
 
-This is WIP and it will take days (weeks?) until this is in a representative state.
-For now, try to wait with your proposals and RFCs to spare both you and us the additional work later.
+## Contributing
+
+1. Fork and clone this repository.
+2. Create a new, appropriately named, markdown document in the `RFCs` directory, based on [Template.md](Template.md).
+3. Write your RFC, following the guidelines in the template.
+4. Submit a pull request containing your new file.
