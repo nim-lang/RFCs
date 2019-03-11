@@ -21,7 +21,7 @@ This features exists in PHP's MySQL drivers, and something similar is possible i
 What would need to be done:
 
 1. Some sort of SQL parsing engine for all supported databaes right now.  It woudln't haven't to be a full fledged one,
-   but would have to process what comes after the `SELECT` portion of a SQL statement.  Would need need to worry about
+   but would have to process what comes after the `SELECT` portion of a SQL statement.  Would need to worry about
    keywords such `AS` for aliasing.
    - There would need to be some research for any odities between all of the SQL variants
 2. `SELECT *` would require fetching data about the desired table from the database.  So this means then that this would
