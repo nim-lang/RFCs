@@ -222,3 +222,8 @@ to make it more explicit and less noisy and not pollute `emit`
 
 However for the first iteration we will simply leverage emit in order not to intrude too much
 in the existing infrastructure (as a Proof of Concept)
+
+## Webpack loader for Nim
+
+Note that work has also started on a [nim-webpack-loader](https://github.com/kristianmandrup/nim-webpack-loader)
+so that Nim can be integrated into a standard web app development workflow.
