@@ -8,6 +8,9 @@
 This RFC is a refinement of [PR #13381](https://github.com/nim-lang/Nim/pull/13381).
 We will likely break this RFC into smaller sub proposals (or sub-RFCs)
 
+Note: Most of the functonality mentioned in this RFC has already been implemented in the PR
+but needs thorough real-life testing/debugging.
+
 Sample use of these proposed infrastructure changes
 
 ```nim
@@ -40,7 +43,7 @@ Using macros with `STOREID` and `GETID` for ES module export
 # store reference to abc
 defineClass("A"):
   property("abc", 42, cStatic):
-    {.emit: "%[STOREID:type=property;alias=A.abc]%".}
+    {.emit: "%[STOREID:property=A.abc]%".}
 
 # more code ...
 
@@ -77,7 +80,7 @@ Reasoning
 
 The order will by default be:
 
-- `getHeader()` - compiler internal 
+- `getHeader()` - compiler internal
 - `header` - author comment header
 - `imports` - ES module imports
 - `types` - for improved typescript interop (`--jsmode ts`)
@@ -138,7 +141,8 @@ The `PSrcCode` contains a sequence of `Rope` that are concatenated on final outp
     srcList: seq[Rope]
 
   PGlobals = ref object of RootObj
-    lastVarName: Rope
+    latestDeclId: Rope # latest Nim declaration id
+    latestDeclGenId: Rope # latest generated output declaration id
     code, header, imports, footer, types: PSrcCode
 ```
 
@@ -171,27 +175,30 @@ Nim types for ID Reference infra
 
 ```nim
 # stores boundary index range (in seq[Rope] for code segment)
-TIdTableEntry = object
-  nimId: string # use s.name.s
+TIdTableEntry = objec
+  id: string # nim declaration id
+  genId: string # unique declaration id generated in output file
   startIndex: int
   endIndex: int
 
 PTIdTableEntry = ref TIdTableEntry
 
-TLookupTable = object
+TIdLookupTable = object
   idMap: TableRef[string, PIdTableEntry]
 
-PLookupTable = ref TLookupTable
+PIdLookupTable = ref TIdLookupTable
 
-TLookupTypeTable = object
-  idTypeMap: TableRef[string, PLookupTable]
+TTypeLookupTable = object
+  typeMap: TableRef[string, PIdLookupTable]
+
+PTypeLookupTable = ref TTypeLookupTable
 ```
 
 During compilation, `p: PProc` is passed around as the compiler context.
 
 ```nim
 TGlobals = object
-  idLookupTable: PLookupTable
+  typeLookupTable: PTypeLookupTable
   # ...
 
 TProc = object
@@ -210,15 +217,17 @@ varName = mangleName(p.module, v)
 let nimVarName = v.name.s # to store the nim var name (useful for clean module exports)
 ```
 
-We can then retrieve the particular value using an emit of the form `%[GETID:class]%` or 
-more specific `%[GETID:class(x)]%` where `x` is the nim declaration id.
+We can retrieve and use the nim  `id` in an `emit` pragma with the special form `%[ID:class]%` (latest `class` id)
+or retrieve a specific `class` id `%[ID:class(x)]%`, where `x` is the nim declaration id.
+
+For the generated declaration `id` use `%[GENID:class]%` or `%[GENID:class(x)]%`, where `x` is the output declaration id.
 
 ## Note: On using emit for state management
 
-To instruct the compiler to store declaration state, use a special `store` pragma 
+To instruct the compiler to store declaration state, use a special `store` pragma
 to make it more explicit and less noisy and not pollute `emit`
 
-`{.store: "class(Person)" .}`
+`{.store: "class(Person)" .}` or `{.store: "property(Person.name)" .}`
 
 However for the first iteration we will simply leverage emit in order not to intrude too much
 in the existing infrastructure (as a Proof of Concept)
@@ -226,4 +235,4 @@ in the existing infrastructure (as a Proof of Concept)
 ## Webpack loader for Nim
 
 Note that work has also started on a [nim-webpack-loader](https://github.com/kristianmandrup/nim-webpack-loader)
-so that Nim can be integrated into a standard web app development workflow.
+so that Nim can be integrated into a standard web app development workflow
