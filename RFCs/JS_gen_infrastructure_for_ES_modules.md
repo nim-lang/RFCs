@@ -43,13 +43,16 @@ Using macros with `STOREID` and `GETID` for ES module export
 # store reference to abc
 defineClass("A"):
   property("abc", 42, cStatic):
-    {.emit: "%[STOREID:property=A.abc]%".}
+    {.store: "property=A.abc".}
 
 # more code ...
 
 # use reference to A.abc for export
-{.emit: "`export default %[GETID:property(A.abc)]%`".}
+{.emit: "`export default %[ID:property(A.abc)]%".}
 ```
+
+The current infrastructure supports storage through the `emit` pragma as `{.emit: "%[STOREID:property=A.abc]%".}`.
+A proper `storage` pragma will be implemented in the PR in the near future.
 
 ## Main Features
 
@@ -227,7 +230,7 @@ For the generated declaration `id` use `%[GENID:class]%` or `%[GENID:class(x)]%`
 To instruct the compiler to store declaration state, use a special `store` pragma
 to make it more explicit and less noisy and not pollute `emit`
 
-`{.store: "class(Person)" .}` or `{.store: "property(Person.name)" .}`
+`{.store: "class=Person)" .}` or `{.store: "property=Person.name" .}`
 
 However for the first iteration we will simply leverage emit in order not to intrude too much
 in the existing infrastructure (as a Proof of Concept)
