@@ -132,6 +132,16 @@ Inject code before or after a declaration
 - `p.insertBeforeAt(sectionName, index, code)`
 - `p.insertAfterAt(sectionName, index, code)`
 
+We expose these injection methods via special `emit` statements
+
+Here an example of injecting a decorator before a `class User` declaration.
+
+`{.emit: "%[BEFORE:class(User)]% @State()"}`
+
+The after injection can f.ex be used to set a variable to point to an imported constant
+
+`{.emit: "%[AFTER:var(rxjs)]% %[GENID:var(rxjs)]% = rxjs"}`
+
 ## Structural JS generator improvements
 
 `code`, `header`, `imports`, `footer` and `types` are all of `PSrcCode` instead of simple `Rope`
