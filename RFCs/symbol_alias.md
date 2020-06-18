@@ -30,11 +30,30 @@ composable iterators, which allows define lazy functional programming primitives
 ## Motivation 5: this fixes or closes a lot of issues
 see a sample here: https://github.com/nim-lang/Nim/pull/11992
 
-## Description
+## Description: alias
 
 ```nim
-alias echo2 = echo # echo2 is the same symbol
+alias foo2 = expr # expr is an expression resolving to a symbol
+# eg:
+alias echo2 = echo # echo2 is the same symbol as `echo`
 echo2() # works
+echo2 1, "bar" # works
+
+alias echo2 = system.echo # works with fully qualified names
+
+import strutils
+alias toLowerAscii2 = strutils.toLowerAscii # works with overloaded symbols
+alias strutils2 = strutils # can alias modules2
+var z = 1
+alias z2 = z # works with var/let/const
+```
+
+## Description: lambda
+library solution on top of alias
+```nim
+alias prod = (a,b) ~> a*b # no type needed
+alias square = a ~> a*a # side effect safe, unlike template fn(a): untyped = a*a
+alias hello = () ~> echo "hello" # can take 0 args and return void
 ```
 
 ## complexity
