@@ -30,7 +30,7 @@ composable iterators, which allows define lazy functional programming primitives
 ## Motivation 5: this fixes or closes a lot of issues
 see a sample here: https://github.com/nim-lang/Nim/pull/11992
 
-## Description: alias
+## alias syntax: `alias foo2 = expr`
 
 ```nim
 alias foo2 = expr # expr is an expression resolving to a symbol
@@ -48,13 +48,68 @@ var z = 1
 alias z2 = z # works with var/let/const
 ```
 
+## passing alias to a routine / generic parameter
+```nim
+proc fn(a: symbol) = discard # fn can be any routine (template etc)
+fn(alias echo) # pass symbol `echo` to `fn`
+proc fn(a, b: symbol) = discard # a, b are bind-many, not bind-once, unlike `seq`; there would be little use for bind-once
+```
+* a `symbol` parameter makes a routine implicitly generic
+* a `symbol` parameter matches a generic parameter:
+```nim
+proc fn[T](a: T) = discard
+fn(12) #ok
+fn(alias echo) #ok
+```
+
+## alias parameters are resolved early
+```nim
+proc fn(a: symbol) =
+  # as soon as you refer to symbol `a`, the alias is resolved
+  doAssert a is int
+  doAssert int is a
+fn(alias int)
+```
+
+## symbol constraints (not implemented)
+```nim
+proc fn(a: symbol[type]) = discard # only match skType
+proc fn(a: symbol[module]) = discard # only match skModule
+proc fn(a: symbol[iterator]) = discard # only match skIterator
+# more complex examples:
+proc fn(a: symbol[proc(int)]) = discard
+proc fn(a: symbol[proc(int): float]) = discard
+proc fn[T](a: symbol[proc(seq[T])]) = discard
+```
+
+note: this can be achieved without `symbol[T]` via `{.enableif.}` (https://github.com/nim-lang/Nim/pull/12048)
+which is also more flexible:
+```nim
+proc fn(a, b: symbol) = discard {.enabelif: isFoo(a, b).}
+```
+
+## symbol parameters typed as a symbol type alias parameter (not implemented)
+```nim
+proc fn(t: symbol, b: t) = discard
+fn(alias int, 12) # type(b) is `t` where `t` is an alias for a type
+
+proc fn(t: symbol): t = t.default
+doAssert fn(int) == 0 # type(result) is `t` where `t` is an alias for a type
+```
+
 ## Description: lambda
-library solution on top of alias
+library solution on top of `alias`
 ```nim
 alias prod = (a,b) ~> a*b # no type needed
 alias square = a ~> a*a # side effect safe, unlike template fn(a): untyped = a*a
 alias hello = () ~> echo "hello" # can take 0 args and return void
 ```
+
+## Differences with https://github.com/nim-lang/Nim/pull/11992
+currently:
+* `const foo2 = alias2 foo` is used instead of `alias foo2 = foo`
+* `fn(alias2 echo)` is used instead of `fn(alias2 echo)`
+* `a: aliassym` is used instead of `a: symbol`
 
 ## complexity
 this introduces a new `tyAliasSym` type, which has to be dealt with.
@@ -72,7 +127,7 @@ when defined nimHasAliassym:
   alias echo2 = echo
 ```
 
-## snippets
+## snippets referenced in this RFC
 ```nim
 when defined case1:
   iterator bar(n = 2): int = yield n
