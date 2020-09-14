@@ -3,7 +3,7 @@
 
 ## Abstract
 
-Provied a way to define default values for object fields.
+Provide a way to define default values for object fields.
 
 ## Motivation
 
