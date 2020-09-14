@@ -21,13 +21,13 @@ this makes it harder to immediatelly understand the default state of the object.
 Second problem is that you need to write **more code to repeat those fields with the default values** in 
 `init_something(int)` and `init_something(string)`.
 
+How it may look like
+
 ```Nim
 type
   Counter = object
     value: int = -1 # Non standard initial value
 ```
-
-Downsides are that for public variables 
 
 
 ## Examples
