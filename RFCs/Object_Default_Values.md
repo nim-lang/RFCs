@@ -15,10 +15,11 @@ Pretty much every person using Nim would benefit from it.
 
 Currently `new_something` or `init_something` are used to set defaults if they are differrent from the primitive default values.
 
-The first problem is that instead of specifying default value in the object definition, it's specified in another place.
+The first problem is that instead of specifying default value in the object definition, **default value specified in a separate place**, 
+this makes it harder to immediatelly understand the default state of the object.
 
-Second problem is that if you have multiple ways to initialize obect `init_something(int)` and `init_something(string)` - you need 
-to duplicate initialization code.
+Second problem is that you need to write **more code to repeat those fields with the default values** in 
+`init_something(int)` and `init_something(string)`.
 
 ```Nim
 type
