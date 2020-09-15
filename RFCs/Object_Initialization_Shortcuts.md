@@ -24,16 +24,35 @@ How it may look like:
 ```Nim
 type
   Unit = object
-    name:   string
-    attack: int
+    race: string 
+    hp:   int
+    name: string
 
-let attack = 100
-echo Unit(name: "Zeratul", attack)
-echo Unit(name: "Zeratul", :attack) # Alternative way
+let 
+  race = "Protoss"
+  hp   = 100
+echo Unit(race, hp, name: "Zeratul")
+echo Unit(:race, :hp, name: "Zeratul") # Alternative way
 ```
 
+Another shortcuts are splats. Currently modifying object requires explicit creation of mutable version and lots of code to modify it. It could be
+improved with using splats, and the code will be shorter, cleaner and immutable and have same performance.
 
-## Examples
+```Nim
+type
+  Unit = object
+    race: string 
+    hp:   int
+    name: string
+
+let 
+  protoss = Unit(race: "Protoss", hp: 100)
+  
+echo Unit(protoss..., name: "Zeratul")
+echo Unit(protoss..., name: "Artanis")
+```
+
+## Example 1
 
 ### Before
 
@@ -59,6 +78,47 @@ proc new_crawler*[J: Job](
   CrawlerRef[J](id, jobs, job_i)
   CrawlerRef[J](:id, :jobs, :job_i) # Alternative way  
 ```
+
+## Example 2
+
+A crawler processing list of jobs.  It takes job from the queue, process it, and put back the updated job. The example showcasing how the job object is updated.
+
+**Before** - how it looks now:
+
+```Nim
+Job*[R] = object
+  id*:          string
+  result*:      Option[R]
+  next_run_at*: int64
+
+# Processing list of jobs in crawler
+for i = 0..crawler.jobs.len:
+  let job = crawler.jobs[i]
+  let result = job.process()
+
+  # Very inconvenient way to modify some parameters on the current job, 
+  # you need to create a var and modify it.
+  # Not good as it requires lots of code and explicitly introducing mutable variable.
+  var updated_job = job
+  updated_job.result      = result.some
+  updated_job.next_run_at = now_sec() + some_delay_sec
+
+  crawler.jobs[i] = updated_job
+```
+
+**After** - how it could look with splats and shortcuts
+
+```Nim
+for i = 0..crawler.jobs.len:
+  let job = crawler.jobs[i]
+  let result = job.process()
+
+  # How it's done in JavaScript, less code and everything is immutable, 
+  # also note the `next_run_at` is a shortcut.
+  let next_run_at = now_sec() + some_delay_sec
+  crawler.jobs[i] = Job(job..., result: result.some, next_run_at)
+```
+
 
 ## Backward incompatibility
 
