@@ -5,20 +5,19 @@
 
 Provide a shorter way to pass parameters during object initalization.
 
-Similar to how it's done in JavaScript / TypeScript.
+The idea taken from JavaScript / TypeScript.
 
 ## Motivation
 
-It reduced and simplifies code in `new_something` or `init_something` procedures.
+It makes object initialization code simpler and shorter. In every place where object initialization used - if initialized explicitly or code needed to write `new_something` or `init_something` procedures.
 
 Pretty much every person using Nim would benefit from it.
 
 ## Description
 
-Currently `new_something` or `init_something` are used to create objects with parameters specified as `Something(field_name: field_value)`.
+Currently objects initialized as `Something(field_name: field_value)`.
 
-The code will be shorter and easier to read if shortcuts are `Something(somevalue)` or `Something(:some)` in cases where `field_value` variable
-has same name as object `field_name`.
+The code could be shortened to `Something(somevalue)` or `Something(:some)` in cases where `field_value` variable has same name as object `field_name`.
 
 How it may look like:
 
@@ -30,6 +29,7 @@ type
 
 let attack = 100
 echo Unit(name: "Zeratul", attack)
+echo Unit(name: "Zeratul", :attack) # Alternative way
 ```
 
 
@@ -37,7 +37,7 @@ echo Unit(name: "Zeratul", attack)
 
 ### Before
 
-Real code from Crawler implementation.
+Real code from Crawler
 
 ```Nim
 proc new_crawler*[J: Job](
@@ -57,6 +57,7 @@ proc new_crawler*[J: Job](
   job_i = -1
 ): CrawlerRef[J] =
   CrawlerRef[J](id, jobs, job_i)
+  CrawlerRef[J](:id, :jobs, :job_i) # Alternative way  
 ```
 
 ## Backward incompatibility
