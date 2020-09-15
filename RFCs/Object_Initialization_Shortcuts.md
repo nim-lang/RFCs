@@ -78,6 +78,7 @@ proc new_crawler*[J: Job](
   job_i = -1
 ): CrawlerRef[J] =
   CrawlerRef[J](id, jobs, job_i)
+
   CrawlerRef[J](:id, :jobs, :job_i) # Alternative way  
 ```
 
