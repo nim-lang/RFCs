@@ -32,6 +32,8 @@ let
   race = "Protoss"
   hp   = 100
 echo Unit(race, hp, name: "Zeratul")
+echo Unit(race, hp, name: "Artanis")
+
 echo Unit(:race, :hp, name: "Zeratul") # Alternative way
 ```
 
