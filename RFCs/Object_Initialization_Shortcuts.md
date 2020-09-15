@@ -17,7 +17,7 @@ Pretty much every person using Nim would benefit from it.
 
 Currently objects initialized as `Something(field_name: field_value)`.
 
-The code could be shortened to `Something(field_value)` or `Something(:field_value)` in cases where `field_value` variable has same name as the object `field_name`.
+The code could be shortened to `Something(field_value)` in cases where `field_value` variable has same name as the object `field_name`.
 
 How it may look like:
 
