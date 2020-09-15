@@ -9,7 +9,7 @@ The idea taken from JavaScript / TypeScript.
 
 ## Motivation
 
-It makes object initialization code simpler and shorter. In every place where object initialization used - if initialized explicitly or code needed to write `new_something` or `init_something` procedures.
+It makes object initialization code simpler and shorter. In every place where object initialization used, if initialized explicitly or in `init_something`. Or when a new object created based on other object.
 
 Pretty much every person using Nim would benefit from it.
 
