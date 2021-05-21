@@ -1,0 +1,39 @@
+# Dart Backend
+
+
+## Abstract
+
+The idea is to add a Dart backend to the Nim compiler.
+
+
+## Motivation
+
+Flutter is quickly becoming the defacto SDK for writing cross-platform mobile apps. Flutter is also adding the ability to create web and desktop apps, which will make it a very good option for writing fully cross-platform apps. However, Flutter is written mainly in Dart and your apps must be written in Dart.
+
+Many people love Nim for its easy Python-similar syntax, and prefer it to Dart. If Nim had a Dart backend then it could be possible to write Flutter apps in Nim. This could potentially open up a huge use case for Nim.
+
+
+## Description
+
+Nim is designed to support multiple backends, with C and Javascript already supported. Adding a Nim backend should therefor not require an architectural change in this regard.
+
+Dart and Nim seem to share many language features, such as GC, optional types (called nullable types in Dart), and await/async.
+
+Dart, however, is an Object Oriented language. It is possible to map the Nim language to an Object Oriented language:
+- Each file could be mapped to a class. A pragma could indicate that this file should be mapped to a class.
+- A special type could be passed between procs, representing a class. A pragma could indicate that this type should be mapped to a class.
+
+Such an effort, if successful, could open the possibility of more backends to various Object Oriented languages in the future.
+
+The downside is that this would require the effort to write and maintain a new backend.
+
+
+## Examples
+
+I have left out code samples as there are too many variations to be of any use.
+
+
+## Backward incompatibility
+
+N/A
+
