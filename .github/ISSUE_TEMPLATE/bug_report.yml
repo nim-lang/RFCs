@@ -1,0 +1,74 @@
+name:        "RFC"
+description: "Create a new Request For Comments."
+labels:      ["unconfirmed"]
+body:
+
+- type: markdown
+  attributes:
+    value: |
+      Please provide a minimal code example that illustrates the basic idea behind your RFC.
+      Reports with full repro code and descriptive detailed information will likely receive feedback faster.
+
+- type: textarea
+  id: rfc-title
+  attributes:
+    label: RFC Title?
+    description: Use a short descriptive title
+    placeholder: RFC short title.
+  validations:
+    required: true
+
+- type: textarea
+  id: rfc-abstract
+  attributes:
+    label: RFC Abstract?
+    description: Just a few sentences (less is more) where you describe your idea.
+    placeholder: Your cool new idea for Nim.
+  validations:
+    required: true
+
+- type: textarea
+  id: rfc-motivation
+  attributes:
+    label: RFC Motivation?
+    description: Describe **why** you think this is a good idea. What problems does it solve?, Who can benefit from it?.
+  validations:
+    required: false
+
+- type: textarea
+  id: rfc-description
+  attributes:
+    label: RFC Description?
+    description: |
+      Here you go into more details about your proposal. This section can be few paragraphs long.
+      
+      If you have an idea how to implement it, describe the steps needed.
+      
+      If there were similar similar proposals already or there can be some alternative approaches to this problem, highlight the differences between those and your proposal, stating why your current proposal is superior.
+      
+      What are the downsides of this proposal?
+  validations:
+    required: true
+
+- type: textarea
+  id: rfc-code
+  attributes:
+    label: RFC Code Examples?
+    description: Code examples should be short and informative. Try to use real-world examples.
+  validations:
+    required: false
+
+- type: textarea
+  id: rfc-incompatibility
+  attributes:
+    label: RFC Backward incompatibility?
+    description: If your RFC introduces backward-incompatible changes, describe them and propose how to deal with them.
+  validations:
+    required: false
+
+- type: markdown
+  attributes:
+    value: |
+      - Thanks for your contributions!, your ideas will receive feedback from the community soon...
+      - **Remember to :star: Star the Nim project on GitHub!.**
+      - [Please, consider a Donation for the Nim project.](https://nim-lang.org/donate.html)
