@@ -9,7 +9,7 @@ body:
       Please provide a minimal code example that illustrates the basic idea behind your RFC.
       Reports with full repro code and descriptive detailed information will likely receive feedback faster.
 
-- type: textarea
+- type: input
   id: rfc-title
   attributes:
     label: RFC Title?
