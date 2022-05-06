@@ -31,7 +31,7 @@ body:
   id: rfc-motivation
   attributes:
     label: Motivation
-    description: Describe **why** you think this is a good idea. What problems does it solve?, Who can benefit from it?.
+    description: Describe **why** you think this is a good idea. What problems does it solve? Who can benefit from it?
   validations:
     required: false
 
