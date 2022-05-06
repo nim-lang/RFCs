@@ -21,7 +21,7 @@ body:
 - type: textarea
   id: rfc-abstract
   attributes:
-    label: RFC Abstract?
+    label: Abstract
     description: Just a few sentences (less is more) where you describe your idea.
     placeholder: Your cool new idea for Nim.
   validations:
