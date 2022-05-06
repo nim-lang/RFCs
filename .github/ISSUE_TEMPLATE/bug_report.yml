@@ -53,7 +53,7 @@ body:
 - type: textarea
   id: rfc-code
   attributes:
-    label: RFC Code Examples?
+    label: Code Examples
     description: Code examples should be short and informative. Try to use real-world examples.
   validations:
     required: false
