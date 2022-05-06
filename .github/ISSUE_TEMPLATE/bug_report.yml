@@ -40,7 +40,7 @@ body:
   attributes:
     label: Description
     description: |
-      Here you go into more details about your proposal. This section can be few paragraphs long.
+      Here, you go into more details about your proposal. This section can be a few paragraphs long.
       
       If you have an idea how to implement it, describe the steps needed.
       
