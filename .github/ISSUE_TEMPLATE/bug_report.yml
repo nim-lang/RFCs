@@ -61,7 +61,7 @@ body:
 - type: textarea
   id: rfc-incompatibility
   attributes:
-    label: RFC Backward incompatibility?
+    label: Backwards Compatibility
     description: If your RFC introduces backward-incompatible changes, describe them and propose how to deal with them.
   validations:
     required: false
