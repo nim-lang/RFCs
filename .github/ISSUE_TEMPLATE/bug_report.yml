@@ -12,7 +12,7 @@ body:
 - type: input
   id: rfc-title
   attributes:
-    label: RFC Title?
+    label: Title
     description: Use a short descriptive title
     placeholder: RFC short title.
   validations:
