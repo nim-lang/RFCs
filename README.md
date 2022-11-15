@@ -9,4 +9,4 @@ Check out these milestones for the list of RFCs that are planned to be or are cu
 
 ## Contributing
 
-Submit a new, appropriately named issue based on [Template.md](Template.md).
+Submit a new, appropriately named issue based on [issue form](.github/ISSUE_TEMPLATE/new_rfc.yml).
