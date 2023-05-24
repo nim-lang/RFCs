@@ -1,0 +1,17 @@
+https://github.com/actions/stale#usage
+name: Stale RFCs
+
+on:
+  schedule:
+    - cron: '30 1 * * *'
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/stale@v8
+        with:
+          days-before-issue-stale: 1095  # 365 * 3
+          stale-issue-message: >
+            This issue is stale because it has been open for 1095 days with no activity.
+            Contribute a fix or comment on the issue, or it will be closed in 7 days.
