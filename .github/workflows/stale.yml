@@ -11,6 +11,7 @@ jobs:
       - uses: actions/stale@v8
         with:
           days-before-issue-stale: 1095  # 365 * 3
+          days-before-issue-close: 30
           stale-issue-message: >
             This RFC is stale because it has been open for 1095 days with no activity.
-            Contribute a fix or comment on the issue, or it will be closed in 7 days.
+            Contribute a fix or comment on the issue, or it will be closed in 30 days.
